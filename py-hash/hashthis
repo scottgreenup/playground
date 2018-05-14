@@ -1,0 +1,26 @@
+#!/bin/python3
+
+import hashlib
+import json
+import sys
+
+if len(sys.argv) != 2:
+    print("ERR")
+    sys.exit(1)
+else:
+    line = sys.argv[1].encode('ascii')
+
+def perform(f, x):
+    m = f()
+    m.update(x)
+    return m.hexdigest()
+
+h = {}
+h['md5'] = perform(hashlib.md5, line)
+h['sha1'] = perform(hashlib.sha1, line)
+h['sha224'] = perform(hashlib.sha224, line)
+h['sha256'] = perform(hashlib.sha256, line)
+h['sha384'] = perform(hashlib.sha384, line)
+h['sha512'] = perform(hashlib.sha512, line)
+
+print(json.dumps(h, indent=4))
